@@ -33,7 +33,7 @@ const Signup = () => {
   const handleChange = (event) => {
     let { name, value } = event.target
     setUser({ ...user, [name]: value })
-    console.log(user)
+    // console.log(user)
   }
 
   const handleSubmit = (e) => {

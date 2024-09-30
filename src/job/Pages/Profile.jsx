@@ -1,8 +1,19 @@
 import Header from "../Components/Header.jsx";
 import Footer from "../Components/Footer.jsx";
 import UserCard from "../Components/UserCard.jsx";
+import { useEffect } from "react";
+import cookies from 'js-cookies';
 
 function Profile() {
+
+  const Token = cookies.getItem('token')
+
+  useEffect(()=>{
+    if(!Token){
+      window.location.replace('/signin')
+    }
+  }, [])
+
   return (
     <div>
       <Header page="profile" />
