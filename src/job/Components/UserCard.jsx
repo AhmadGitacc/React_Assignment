@@ -48,7 +48,7 @@ function UserCard({ page }) {
             <a href="/profile-details">Profile Details</a>
           </li>
           <li className={page == "bookmark" ? "active" : null}>
-            <a href="/bookmarks">Bookmark</a>
+            <a href="/bookmark">Bookmark</a>
           </li>
           <li className={page == "appliedJob" ? "active" : null}>
             <a href="/applied-job">applied job</a>

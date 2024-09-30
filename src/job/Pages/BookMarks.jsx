@@ -13,7 +13,7 @@ function BookMark() {
           <div className="breadcrumb-section">
             <ol className="breadcrumb">
               <li>
-                <a href="index.html">Home</a>
+                <a href="/home">Home</a>
               </li>
               <li>Bookmark</li>
             </ol>
@@ -26,7 +26,7 @@ function BookMark() {
               <div className="item-info">
                 <div className="item-image-box">
                   <div className="item-image">
-                    <a href="job-details.html">
+                    <a href="/job-details">
                       <img
                         src="images/job/3.png"
                         alt="Image"
@@ -37,7 +37,7 @@ function BookMark() {
                 </div>
                 <div className="ad-info">
                   <span>
-                    <a href="job-details.html" className="title">
+                    <a href="/job-details" className="title">
                       CTO
                     </a>{" "}
                     @ <a href="#">Volja Events &amp; Entertainment</a>
@@ -83,7 +83,7 @@ function BookMark() {
               <div className="item-info">
                 <div className="item-image-box">
                   <div className="item-image">
-                    <a href="job-details.html">
+                    <a href="/job-details">
                       <img
                         src="images/job/1.png"
                         alt="Image"
@@ -94,7 +94,7 @@ function BookMark() {
                 </div>
                 <div className="ad-info">
                   <span>
-                    <a href="job-details.html" className="title">
+                    <a href="/job-details" className="title">
                       Project Manager
                     </a>{" "}
                     @ <a href="#">Dominos Pizza</a>
@@ -140,7 +140,7 @@ function BookMark() {
               <div className="item-info">
                 <div className="item-image-box">
                   <div className="item-image">
-                    <a href="job-details.html">
+                    <a href="/job-details">
                       <img
                         src="images/job/2.png"
                         alt="Image"
@@ -151,7 +151,7 @@ function BookMark() {
                 </div>
                 <div className="ad-info">
                   <span>
-                    <a href="job-details.html" className="title">
+                    <a href="/job-details" className="title">
                       Graphics Designer
                     </a>{" "}
                     @ <a href="#">AOK Security</a>

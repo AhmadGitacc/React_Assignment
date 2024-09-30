@@ -18,6 +18,7 @@ import AppliedJob from "./job/Pages/AppliedJobs.jsx";
 import DeleteAccount from "./job/Pages/DeleteAccount";
 import Signup from "./job/Pages/Signup.jsx";
 import Signin from "./job/Pages/Signin.jsx";
+import 'react-notifications-component/dist/theme.css'
 
 
 
@@ -38,7 +39,7 @@ function App() {
           {/* Jobs routes */}
           <Route path="/home" element={<Home />} />
           <Route path="/job-list" element={<JobList />} />
-          <Route path="/job-details" element={<JobDetails />} />
+          <Route path="/job-details/:id" element={<JobDetails />} />
           <Route path="/resume" element={<Resume />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/post-resume" element={<PostResume />} />

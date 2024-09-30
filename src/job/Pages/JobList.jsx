@@ -11,7 +11,7 @@ function JobLists() {
           <div className="breadcrumb-section">
             <ol className="breadcrumb">
               <li>
-                <a href="/">Home</a>
+                <a href="/home">Home</a>
               </li>
               <li>Engineer/Architects</li>
             </ol>
@@ -1374,7 +1374,7 @@ function JobLists() {
               <h4>
                 Post your Resume for free on <a href="#">Jobs.com</a>
               </h4>
-              <a href="post-resume.html" className="btn btn-primary">
+              <a href="/post-resume" className="btn btn-primary">
                 Add Your Resume
               </a>
             </div>

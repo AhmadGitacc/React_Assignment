@@ -1,0 +1,40 @@
+export const jobData = [
+    {
+        image: "/images/job/1.png",
+        job_title: "Project Manager",
+        company: "Voila",
+        Location: "Keffi",
+        min_salary: "60",
+        max_salary: "80",
+        level: "Entry",
+        time: "Full Time",
+        id: "1",
+        office: "Keffi branch",
+        
+    },
+    {
+        image: "/images/job/1.png",
+        job_title: "Chef",
+        company: "Dominos",
+        Location: "Karu",
+        min_salary: "20",
+        max_salary: "50",
+        level: "Mid",
+        time: "Part Time",
+        id: "2",
+        office: "Keffi branch",
+        
+    },
+    {
+        image: "images/job/1.png",
+        job_title: "Franchise Manager",
+        company: "Dominos",
+        Location: "Lasu",
+        min_salary: "100",
+        max_salary: "150",
+        level: "Senior",
+        time: "Hybrid",
+        id: "3",
+        office: "Lagos branch",
+    },
+]

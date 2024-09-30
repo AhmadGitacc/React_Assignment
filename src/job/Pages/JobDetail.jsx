@@ -1,7 +1,27 @@
 import HeaderComp from "../Components/Header";
 import FooterComp from "../Components/Footer";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { config } from "../Components/AxiosConfig";
+import axios from "axios";
 
 function JobDetail() {
+  let param = useParams()
+
+  const [content, setContent] = useState({})
+
+  const FetchData = () => {
+    let url = 'http://get_data/' + param.id
+
+    axios.get(url, config).then(response => {
+      setContent(response.data.data)
+    })
+  }
+
+  useEffect(() => {
+    // FetchData()
+  }, [])
+
   return (
     <div>
       <HeaderComp page="Details" />
@@ -11,10 +31,10 @@ function JobDetail() {
           <div className="breadcrumb-section">
             <ol className="breadcrumb">
               <li>
-                <a href="index.html">Home</a>
+                <a href="/home">Home</a>
               </li>
               <li>
-                <a href="job-list.html">Engineer/Architects</a>
+                <a href="/job-list">Engineer/Architects</a>
               </li>
               <li>UI & UX Designer</li>
             </ol>
@@ -79,7 +99,7 @@ function JobDetail() {
                 <div className="item-image-box">
                   <div className="item-image">
                     <img
-                      src="images/job/4.png"
+                      src="/images/job/4.png"
                       alt="Image"
                       className="img-fluid"
                     />
@@ -89,7 +109,7 @@ function JobDetail() {
                   <span>
                     <span>
                       <a href="#" className="title">
-                        Human Resource Manager
+                        {content.title}
                       </a>
                     </span>{" "}
                     @ <a href="#"> Dropbox Inc</a>

@@ -12,7 +12,7 @@ function ProfileDetail() {
           <div className="breadcrumb-section">
             <ol className="breadcrumb">
               <li>
-                <a href="index.html">Home</a>
+                <a href="/home">Home</a>
               </li>
               <li>Profile Details</li>
             </ol>
