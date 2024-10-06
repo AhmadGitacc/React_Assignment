@@ -87,11 +87,11 @@ const Signup = () => {
             })
           }
         })
-        .catch(() => {
+        .catch((err) => {
           Notif({
             title: 'Error ',
-            message: "Error Signing Up",
-            type: 'danger',
+            message: "Error Signing Up "+ err,
+            type: 'warning',
           })
         })
 

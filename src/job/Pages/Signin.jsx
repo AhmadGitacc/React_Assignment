@@ -22,11 +22,11 @@ function Signin() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    Swal.fire({
-      imageUrl: "https://www.icegif.com/loading-13/",
-      imageHeight: 200,
-      showconfirmButton: false
-    });
+    // Swal.fire({
+    //   imageUrl: "https://www.icegif.com/loading-13/",
+    //   imageHeight: 200,
+    //   showconfirmButton: false
+    // });
 
     const fd = new FormData()
     fd.append('email_address', user.email_address)
@@ -58,11 +58,11 @@ function Signin() {
           })
         }
       })
-      .catch(() => {
+      .catch((err) => {
         Notif({
           title: 'Error ',
-          message: "Error Signing in",
-          type: 'danger',
+          message: "Error Signing in "+ err,
+          type: 'warning',
         })
       })
 
