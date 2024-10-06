@@ -3,16 +3,38 @@ import Footer from "../Components/Footer.jsx";
 import UserCard from "../Components/UserCard.jsx";
 import { useEffect } from "react";
 import cookies from 'js-cookies';
+import axios from "axios";
+import { config } from "../Components/AxiosConfig.jsx";
 
 function Profile() {
 
   const Token = cookies.getItem('token')
+  const email = cookies.getItem('email_address')
 
-  useEffect(()=>{
-    if(!Token){
+  const url = `http://solidrockschool.com.ng/api/people/existence/${email}`;   
+
+  useEffect(() => {
+    // Logic to check if a user exists
+    axios.get(url, config)
+      .then(response => {
+        if (response.data.status === 200) {
+          console.log("This user exists")
+        }
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+
+       if (!Token) {
       window.location.replace('/signin')
     }
   }, [])
+
+  //To update if either the token or email changes
+  // }, [Token, email])
+
+
+
 
   return (
     <div>
@@ -47,7 +69,7 @@ function Profile() {
                     <a href="#">
                       <span
                         className="__cf_email__"
-                        // data-cfemail="3a534e49575f7a494f484053565f5d5f5f5114595557"
+                      // data-cfemail="3a534e49575f7a494f484053565f5d5f5f5114595557"
                       >
                         [email&#160;protected]
                       </span>

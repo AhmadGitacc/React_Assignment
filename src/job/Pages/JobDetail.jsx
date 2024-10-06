@@ -4,23 +4,103 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { config } from "../Components/AxiosConfig";
 import axios from "axios";
+import Swal from "sweetalert2";
+import Notif from "../Components/Notif";
 
 function JobDetail() {
-  let param = useParams()
+  let { id } = useParams();
 
-  const [content, setContent] = useState({})
+  const [content, setContent] = useState(null);
 
   const FetchData = () => {
-    let url = 'http://get_data/' + param.id
+    let url = `http://solidrockschool.com.ng/api/job/info/${id}`;
 
-    axios.get(url, config).then(response => {
-      setContent(response.data.data)
-    })
+    axios.get(url, config)
+      .then(response => {
+        console.log(response.data.data)
+        setContent(response.data.data)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error)
+      })
   }
 
   useEffect(() => {
-    // FetchData()
+    FetchData();
   }, [])
+
+  const handleApply = (e) => {
+    e.preventDefault()
+
+    const fd = new FormData()
+    fd.append('job_code', "ed")
+    fd.append('company_code', "ed")
+    fd.append('people_code', "rd")
+
+    let url = "http://solidrockschool.com.ng/api/people/job/apply";
+
+    axios.post(url, fd, config)
+      .then(response => {
+        if (response.data.message === 200) {
+          Swal.fire("Job Application Successful")
+        } else {
+          Swal.fire("Job Application Unsuccessful")
+        }
+      }).catch(err => {
+        let errorMessage = 'Something went wrong!';
+
+        if (err.response) {
+          errorMessage = `Error: ${err.response.data.message || 'Unknown server error'}`;
+        } else if (err.request) {
+          errorMessage = 'No response from the server. Please check your network.';
+        } else {
+          errorMessage = err.message;
+        }
+
+        Notif({
+          title: 'Some Error',
+          message: errorMessage,
+          type: 'warning',
+        });
+
+        console.error('Error details:', err);
+      })
+  }
+
+  const handleBookmark = (e) => {
+    e.preventDefault()
+
+    const fd = new FormData()
+    fd.append('job_code', "sde")
+    fd.append('people_code', "sdrf")
+
+    let url = "http://solidrockschool.com.ng/api/people/job/bookmark";
+
+    axios.post(url, fd, config)
+      .then(response => {
+        Swal.fire(response.data.message)
+      }).catch(err => {
+        let errorMessage = 'Something else went wrong!';
+
+        if (err.response) {
+          errorMessage = `Error: ${err.response.data.message || 'Unknown server error'}`;
+        } else if (err.request) {
+          errorMessage = 'No response from the server. Please check your network.';
+        } else {
+          errorMessage = err.message;
+        }
+
+        Notif({
+          title: 'Some Error',
+          message: errorMessage,
+          type: 'warning',
+        });
+
+        console.error('Error details:', err);
+      })
+  }
+
+
 
   return (
     <div>
@@ -109,10 +189,10 @@ function JobDetail() {
                   <span>
                     <span>
                       <a href="#" className="title">
-                        {content.title}
+                        {content?.title}
                       </a>
                     </span>{" "}
-                    @ <a href="#"> Dropbox Inc</a>
+                    @ <a href="#"> Dropbox Inc {content?.company_code}</a>
                   </span>
                   <div className="ad-meta">
                     <ul>
@@ -122,7 +202,7 @@ function JobDetail() {
                             className="fa fa-map-marker"
                             aria-hidden="true"
                           ></i>
-                          San Francisco, CA, US
+                          {content?.location}
                         </a>
                       </li>
                       <li>
@@ -133,7 +213,7 @@ function JobDetail() {
                       </li>
                       <li>
                         <i className="fa fa-money" aria-hidden="true"></i>
-                        $25,000 - $35,000
+                        ${content?.min_salary} - ${content?.max_salary}
                       </li>
                       <li>
                         <a href="#">
@@ -146,7 +226,7 @@ function JobDetail() {
                           className="fa fa-hourglass-start"
                           aria-hidden="true"
                         ></i>
-                        Application Deadline : Jan 10, 2017
+                        Application Deadline : {content?.closing_date}
                       </li>
                     </ul>
                   </div>
@@ -154,11 +234,11 @@ function JobDetail() {
               </div>
               <div className="social-media">
                 <div className="button">
-                  <a href="#" className="btn btn-primary">
+                  <a onClick={handleApply} className="btn btn-primary">
                     <i className="fa fa-briefcase" aria-hidden="true"></i>Apply
                     For This Job
                   </a>
-                  <a href="#" className="btn btn-primary bookmark">
+                  <a onClick={handleBookmark} className="btn btn-primary bookmark">
                     <i className="fa fa-bookmark-o" aria-hidden="true"></i>
                     Bookmark
                   </a>
@@ -221,15 +301,7 @@ function JobDetail() {
                       <h1>Description</h1>
                       <p>
                         <span>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo consequat. Duis aute irure dolor in
-                          reprehenderit in voluptate velit esse cillum dolore eu
-                          fugiat nulla pariatur. Excepteur sint occaecat
-                          cupidatat non proident, sunt in culpa qui officia
-                          deserunt mollit anim id est laborum.
+                          {content?.description}
                         </span>
                       </p>
                       <p>
@@ -297,7 +369,7 @@ function JobDetail() {
                         <span className="icon">
                           <i className="fa fa-bolt" aria-hidden="true"></i>
                         </span>
-                        Posted: 1 day ago
+                        Posted on: {content?.created_at}
                       </li>
                       <li>
                         <span className="icon">
@@ -318,7 +390,7 @@ function JobDetail() {
                             aria-hidden="true"
                           ></i>
                         </span>
-                        Experience: <a href="#">Entry level</a>
+                        Experience: <a href="#">{content?.experience}</a>
                       </li>
                       <li>
                         <span className="icon">
@@ -334,7 +406,7 @@ function JobDetail() {
                       <li>
                         Compnay Name: <a href="#">Dropbox Inc</a>
                       </li>
-                      <li>Address: London, United Kingdom</li>
+                      <li>Address: {content?.location}</li>
                       <li>Compnay SIze: 2k Employee</li>
                       <li>
                         Industry: <a href="#">Technology</a>

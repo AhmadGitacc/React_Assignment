@@ -25,7 +25,7 @@ function Signin() {
     Swal.fire({
       imageUrl: "https://www.icegif.com/loading-13/",
       imageHeight: 200,
-      showconfirmButton: true
+      showconfirmButton: false
     });
 
     const fd = new FormData()
@@ -45,6 +45,7 @@ function Signin() {
           })
           cookies.setItem('token', response.data.token)
           cookies.setItem('code', response.data.code)
+          cookies.setItem('email_address', user.email_address)
 
           window.location.replace('/profile')
 

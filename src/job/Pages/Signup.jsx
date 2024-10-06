@@ -16,7 +16,6 @@ const Signup = () => {
     confirmPassword: '',
     phone: '',
     city: ''
-
   })
 
   const [error, setError] = useState({
@@ -26,7 +25,6 @@ const Signup = () => {
     confirmPassword: '',
     phone: '',
     city: ''
-
   })
 
 
@@ -47,15 +45,15 @@ const Signup = () => {
     //   err.confirmPassword = "Password does not match"
     // }
 
-    // if (user.password.length < 8) {
-    //   is_valid = false;
-    //   err.password = "Password cannot be less than 8 characters"
-    // }
+    if (user.password.length < 8) {
+      is_valid = false;
+      err.password = "Password cannot be less than 8 characters"
+    }
 
-    // if (user.confirmPassword !== user.Password) {
-    //   is_valid = false;
-    //   err.confirmPassword = "Password does not match"
-    // }
+    if (user.confirmPassword !== user.password) {
+      is_valid = false;
+      err.confirmPassword = "Password does not match"
+    }
 
     setError(err)
 
@@ -89,7 +87,7 @@ const Signup = () => {
             })
           }
         })
-        .catch((error) => {
+        .catch(() => {
           Notif({
             title: 'Error ',
             message: "Error Signing Up",
@@ -112,7 +110,6 @@ const Signup = () => {
     //   type: 'success',
     //   duration: 4000
     // })
-
 
     cookies.setItem('foo', 'bar');
     Notif({

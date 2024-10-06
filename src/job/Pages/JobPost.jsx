@@ -1,7 +1,88 @@
 import HeaderComp from "../Components/Header";
 import FooterComp from "../Components/Footer";
+import { useState } from "react";
+import axios from "axios";
+import { config } from "../Components/AxiosConfig";
+import Notif from "../Components/Notif";
 
 function JobPost() {
+
+  const [newJob, setNewJob] = useState({
+    category_code: "",
+    company_code: "",
+    job_type: "",
+    location: "",
+    closing_date: "",
+    experience: "",
+    description: "",
+    fees: "",
+    staff: "",
+    min_salary: "",
+    max_salary: "",
+    title: ""
+  })
+
+  const handleChange = (event) => {
+    let { name, value } = event.target;
+    setNewJob({ ...newJob, [name]: value })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const url = 'http://solidrockschool.com.ng/api/job/add'
+
+    const fd = new FormData();
+    fd.append('title', newJob.title)
+    fd.append('description', newJob.description)
+    fd.append('max_salary', newJob.max_salary)
+    fd.append('min_salary', newJob.min_salary)
+    fd.append('experience', newJob.experience)
+    fd.append('category_code', 'erd')
+    fd.append('company_code', 'wsed')
+    fd.append('job_type', 'ok')
+    fd.append('location', 'Somewhere under the sea')
+    fd.append('closing_date', '2024-09-19')
+
+    axios.post(url, fd, config)
+      .then(response => {
+        if (response.data.status === 200) {
+          Notif({
+            title: 'New Job Saved',
+            message: 'Job added successfully',
+            type: 'success',
+            duration: 4000
+          })
+        } else {
+          Notif({
+            title: 'Error',
+            message: response.data.message,
+            type: 'danger',
+            duration: 4000
+          })
+        }
+      })
+      .catch(err => {
+        let errorMessage = 'Something went wrong!';
+
+        if (err.response) {
+          errorMessage = `Error: ${err.response.data.message || 'Unknown server error'}`;
+        } else if (err.request) {
+          errorMessage = 'No response from the server. Please check your network.';
+        } else {
+          errorMessage = err.message;
+        }
+
+        Notif({
+          title: 'Error',
+          message: errorMessage,
+          type: 'warning',
+        });
+
+        console.error('Error details:', err);
+      })
+  }
+
   return (
     <div>
       <HeaderComp page="post" />
@@ -19,7 +100,7 @@ function JobPost() {
           <div className="job-postdetails">
             <div className="row">
               <div className="col-lg-8">
-                <form action="#">
+                <form onSubmit={handleSubmit}>
                   <fieldset>
                     <div className="section postdetails">
                       <h4>
@@ -44,10 +125,10 @@ function JobPost() {
                             </a>
                             <ul className="dropdown-menu category-change">
                               <li>
-                                <a href="#">Select a category</a>
+                                <a href="">Select a category</a>
                               </li>
                               <li>
-                                <a href="#">Software Engineer</a>
+                                <a href="">Software Engineer</a>
                               </li>
                               <li>
                                 <a href="#">Program Development</a>
@@ -99,13 +180,16 @@ function JobPost() {
                       </div>
                       <div className="row form-group">
                         <label className="col-sm-3 label-title">
-                          Title for your jonb<span className="required">*</span>
+                          Title for your job<span className="required">*</span>
                         </label>
                         <div className="col-sm-9">
                           <input
                             type="text"
                             className="form-control"
                             placeholder="ex, Human Resource Manager"
+                            name="title"
+                            value={newJob.title}
+                            onChange={handleChange}
                           />
                         </div>
                       </div>
@@ -117,6 +201,9 @@ function JobPost() {
                           <textarea
                             className="form-control"
                             id="textarea"
+                            name="description"
+                            value={newJob.description}
+                            onChange={handleChange}
                             placeholder="Write few lines about your jobs"
                             rows="8"
                           ></textarea>
@@ -192,12 +279,18 @@ function JobPost() {
                             type="text"
                             className="form-control"
                             placeholder="Min"
+                            name="min_salary"
+                            value={newJob.min_salary}
+                            onChange={handleChange}
                           />
                           <span>-</span>
                           <input
                             type="text"
                             className="form-control"
                             placeholder="Max"
+                            name="max_salary"
+                            value={newJob.max_salary}
+                            onChange={handleChange}
                           />
                           <input
                             type="radio"
@@ -244,30 +337,16 @@ function JobPost() {
                           Exprience<span className="required">*</span>
                         </label>
                         <div className="col-sm-9">
-                          <div className="dropdown category-dropdown">
-                            <a
-                              data-toggle="dropdown"
-                              href="#"
-                              aria-expanded="false"
-                            >
-                              <span className="change-text">Mid Level</span>{" "}
-                              <i className="fa fa-angle-down pull-right"></i>
-                            </a>
-                            <ul className="dropdown-menu category-change">
-                              <li>
-                                <a href="#">Entry Level</a>
-                              </li>
-                              <li>
-                                <a href="#">Mid Level</a>
-                              </li>
-                              <li>
-                                <a href="#">Mid-Senior Level</a>
-                              </li>
-                              <li>
-                                <a href="#">Top Level</a>
-                              </li>
-                            </ul>
-                          </div>
+                          <select className="dropdown category-dropdown"
+                            required
+                            name="experience"
+                            value={newJob.experience}
+                            onChange={handleChange}>
+                            <option value="entry-level">Entry Level</option>
+                            <option value="mid-level" selected>Mid Level</option>
+                            <option value="mid-senior-level">Mid-Senior Level</option>
+                            <option value="top-level">Top Level</option>
+                          </select>
                         </div>
                       </div>
                       <div className="row form-group brand-name">
