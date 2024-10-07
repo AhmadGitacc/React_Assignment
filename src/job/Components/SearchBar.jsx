@@ -8,6 +8,7 @@ const SearchBar = () => {
     const [search, setSearch] = useState({
         search: ""
     })
+    
 
     const handleChange = (e) => {
         let { name, value } = e.target
@@ -24,7 +25,7 @@ const SearchBar = () => {
         axios.post(url, fd, config)
             .then(response => {
                 if (response.data.status === 200) {
-                    Swal.fire(response.data.message)
+                    Swal.fire(response.data.data)
                 } else {
                     Swal.fire("Error: ", response.data.message)
                 }
@@ -34,6 +35,7 @@ const SearchBar = () => {
                     title: 'Error ',
                     message: err.message,
                     type: 'warning',
+                    duration: 3000
                 })
             })
 
